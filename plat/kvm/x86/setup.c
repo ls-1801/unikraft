@@ -287,6 +287,12 @@ static inline int cmdline_init(struct ukplat_bootinfo *bi)
 
 static void __noreturn _ukplat_entry2(void)
 {
+	/* It's not possible to unwind past this function, because the stack
+	 * pointer was overwritten in lcpu_arch_jump_to. Therefore, mark the
+	 * previous instruction pointer as undefined, so that debuggers or
+	 * profilers stop unwinding here.
+	 */
+	__asm__(".cfi_undefined rip\n");
 	ukplat_entry_argp(NULL, cmdline, cmdline_len);
 
 	ukplat_lcpu_halt();
