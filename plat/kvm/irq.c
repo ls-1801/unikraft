@@ -119,7 +119,9 @@ void _ukplat_irq_handle(unsigned long irq)
 	 * devices, and (2) to minimize impact on drivers that share one
 	 * interrupt line that would then stay disabled.
 	 */
+#ifndef CONFIG_NETWORK_PERFORMANCE_EVALUATION	
 	uk_pr_crit("Unhandled irq=%lu\n", irq);
+#endif //CONFIG_NETWORK_PERFORMANCE_EVALUATION
 
 exit_ack:
 	intctrl_ack_irq(irq);
